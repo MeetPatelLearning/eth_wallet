@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { Component } from 'react';
-import daiLogo from '../dai-logo.png';
+import CleanCoin from '../CleanCoin.jpeg';
 import './App.css';
 import Web3 from 'web3';
 import DaiTokenMock from '../abis/DaiTokenMock.json'
@@ -27,11 +28,12 @@ class App extends Component {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0] })
-    const daiTokenAddress = "0x7b729B07EcBDEd8879Acf997aAF6546926982830" // Replace DAI Address Here
+    const daiTokenAddress = "0x5b3d536b2b94CDE484DaE222559b9957575997c7" // Replace Currency Address Here
     const daiTokenMock = new web3.eth.Contract(DaiTokenMock.abi, daiTokenAddress)
     this.setState({ daiTokenMock: daiTokenMock })
     const balance = await daiTokenMock.methods.balanceOf(this.state.account).call()
     this.setState({ balance: web3.utils.fromWei(balance.toString(), 'Ether') })
+    console.log(balance.toString())
     const transactions = await daiTokenMock.getPastEvents('Transfer', { fromBlock: 0, toBlock: 'latest', filter: { from: this.state.account } })
     this.setState({ transactions: transactions })
     console.log(transactions)
@@ -63,7 +65,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Dapp University
+            Garbage Management Blockchain
           </a>
         </nav>
         <div className="container-fluid mt-5">
@@ -75,9 +77,9 @@ class App extends Component {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <img src={daiLogo} width="150" />
+                  <img src={CleanCoin} width="150" />
                 </a>
-                <h1>{this.state.balance} DAI</h1>
+                <h1>{this.state.balance} CleanCoin</h1>
                 <form onSubmit={(event) => {
                   event.preventDefault()
                   const recipient = this.recipient.value
